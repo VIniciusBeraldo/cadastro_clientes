@@ -1,0 +1,82 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eef2f7;
+    min-height: 100vh;
+    /* Garante que o body ocupa a altura total da viewport */
+    margin: 0;
+    color: #333;
+    display: flex;
+    /* Torna o body um container flex */
+    flex-direction: column;
+    /* Organiza os itens em coluna: nav, main, footer */
+}
+
+nav {
+    width: 100%;
+    /* margin-top: 0px; Remova esta linha, pois não é necessária para um elemento fixo */
+    display: flex;
+    background-color: #333;
+    overflow: hidden;
+    padding: 15px 20px;
+    text-align: center;
+
+    position: fixed;
+    /* Torna o nav fixo na tela */
+    top: 0;
+    /* Alinha ao topo */
+    left: 0;
+    /* Alinha à esquerda */
+    z-index: 1000;
+    /* Garante que o nav fique acima de outros elementos */
+    justify-content: center;
+    /* Centraliza os links do menu horizontalmente */
+    box-sizing: border-box;
+    /* Inclui padding e border no cálculo da largura total */
+}
+
+nav a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-size: 17px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+nav a:hover {
+    background-color: #575757;
+}
+
+/* Novo estilo para o conteúdo principal */
+main {
+    flex-grow: 1;
+    /* Faz com que esta seção ocupe todo o espaço vertical disponível */
+    padding-top: 70px;
+    /* Adiciona espaço no topo para o nav fixo */
+    padding-bottom: 20px;
+    /* Adiciona um pequeno espaço antes do footer */
+    display: flex;
+    /* Usa flexbox para centralizar o .container dentro do main */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    align-items: center;
+    /* Centraliza verticalmente (útil se o conteúdo for curto) */
+    width: 100%;
+    /* Garante que o main ocupe toda a largura */
+    box-sizing: border-box;
+    /* Inclui padding no cálculo do tamanho */
+}
+
+/* Estilos para o footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    /* Inclui padding no cálculo da largura */
+}

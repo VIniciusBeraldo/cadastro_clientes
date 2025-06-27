@@ -1,0 +1,97 @@
+/* Container do formulário */
+.container {
+    margin-top: 15px;
+    background-color: #ffffff;
+    padding: 15px; /* Reduzido o padding para economizar espaço */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px; /* Aumentado um pouco a largura máxima para acomodar mais campos lado a lado */
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px; /* Reduzido a margem inferior */
+    font-size: 1.8em;
+}
+
+/* Estilos para grupos de formulário padrão (campos que ocupam a linha toda) */
+.form-group {
+    margin-bottom: 15px; /* Reduzido o espaço entre os grupos de campos */
+}
+
+/* Estilos para as "linhas" horizontais do formulário */
+.form-row {
+    display: flex; /* Torna o .form-row um container flex */
+    gap: 15px; /* Reduzido o espaço entre as colunas (os campos) */
+    margin-bottom: 15px; /* Reduzido o espaço entre esta linha e a próxima */
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha em telas menores */
+}
+
+/* Ajusta os grupos de formulário DENTRO de um .form-row */
+.form-row .form-group {
+    flex: 1; /* Faz com que cada form-group dentro de um form-row ocupe espaço igual */
+    min-width: 150px; /* Define uma largura mínima para evitar que os campos fiquem muito pequenos */
+    margin-bottom: 0; /* Remove a margem inferior para que o gap do .form-row controle o espaçamento */
+}
+
+
+label {
+    display: block;
+    margin-bottom: 6px; /* Reduzido a margem inferior do label */
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="tel"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px 12px; /* Reduzido o padding dos inputs */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 0.95em; /* Ligeiramente menor fonte para economizar espaço */
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px; /* Reduzido a altura mínima da textarea */
+}
+
+button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}

@@ -1,0 +1,70 @@
+<?php
+// Define que a resposta será em formato JSON para que o JavaScript possa interpretá-la
+header('Content-Type: application/json');
+
+// Configurações do banco de dados
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "cadastro_clientes";
+
+// Conecta ao banco de dados
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verifica a conexão
+if ($conn->connect_error) {
+    echo json_encode(['success' => false, 'message' => 'Erro de conexão com o banco de dados: ' . $conn->connect_error]);
+    exit();
+}
+
+// Verifica se a requisição é POST e se todos os campos necessários foram enviados
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'], $_POST['nomeCompleto'], $_POST['dataNascimento'], $_POST['cpf'], $_POST['telefone'], $_POST['email'], $_POST['endereco'])) {
+
+    // Sanitiza e obtém os dados do POST
+    $id = intval($_POST['id']);
+    $nome_completo = $_POST['nomeCompleto'];
+    $data_nascimento = $_POST['dataNascimento'];
+    $cpf = $_POST['cpf'];
+    $telefone = $_POST['telefone'];
+    $email = $_POST['email'];
+    $endereco = $_POST['endereco'];
+
+    // Prepara a consulta SQL para atualizar o cliente usando Prepared Statements (segurança!)
+    $sql = "UPDATE clientes SET
+                nome_completo = ?,
+                data_nascimento = ?,
+                cpf = ?,
+                telefone = ?,
+                email = ?,
+                endereco = ?
+            WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+
+    // 's' para string, 's' para string (data), 's' para string (cpf), etc., 'i' para inteiro (id)
+    $stmt->bind_param("ssssssi", $nome_completo, $data_nascimento, $cpf, $telefone, $email, $endereco, $id);
+
+    // Executa a consulta
+    if ($stmt->execute()) {
+        // Verifica se alguma linha foi afetada (se o cliente realmente existia e foi atualizado)
+        if ($stmt->affected_rows > 0) {
+            echo json_encode(['success' => true, 'message' => 'Cliente atualizado com sucesso!']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Nenhuma alteração detectada ou cliente não encontrado.']);
+        }
+    } else {
+        // Erro na execução da consulta
+        echo json_encode(['success' => false, 'message' => 'Erro ao atualizar cliente: ' . $stmt->error]);
+    }
+
+    // Fecha o statement
+    $stmt->close();
+
+} else {
+    // Caso a requisição não seja POST ou faltem dados
+    echo json_encode(['success' => false, 'message' => 'Requisição inválida ou dados incompletos.']);
+}
+
+// Fecha a conexão com o banco de dados
+$conn->close();
+?>
