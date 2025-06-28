@@ -4,12 +4,11 @@
  * Arquivo: api/clientes.php
  * Descrição: Script API para gerenciar (listar, buscar por ID) clientes no banco de dados.
  * Autor: Vinicius Beraldo da Silva
- * Data: 27/06/2025
- *
+ *  
  * Este script lida com requisições GET para retornar:
- * - Todos os clientes (se nenhum ID for fornecido)
- * - Um cliente específico (se um ID for fornecido via GET)
- */
+ *  - Um cliente específico (se um ID for fornecido via GET)
+ *  - Todos os clientes (se nenhum ID for fornecido)
+ */ 
 
 header('Content-Type: application/json'); 
 header('Access-Control-Allow-Origin: *'); 
@@ -26,7 +25,7 @@ if ($conn->connect_error) {
     exit();
 }
 
-// Validando se chamada foi feita pelo botão excluir
+// Validando se existe um parametro id na url, para retornar apenas o id desejado.
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $sql = "SELECT

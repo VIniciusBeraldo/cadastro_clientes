@@ -68,9 +68,9 @@
             const cadastroClienteForm = document.getElementById('cadastroClienteForm');
 
             cadastroClienteForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Impede o envio padrão do formulário
+                event.preventDefault();
 
-                const formData = new FormData(this); // Coleta os dados do formulário
+                const formData = new FormData(this); 
 
                 fetch('api/processa_cadastro.php', {
                     method: 'POST',
@@ -80,14 +80,12 @@
                     if (!response.ok) {
                         throw new Error('Erro na rede ou no servidor: ' + response.statusText);
                     }
-                    return response.json(); // Espera uma resposta JSON
+                    return response.json(); 
                 })
                 .then(data => {
-                    // Substitui alert() por showCustomModal()
                     if (data.success) {
                         window.showCustomModal('Sucesso!', data.message, 'success', () => {
-                            cadastroClienteForm.reset(); // Limpa o formulário em caso de sucesso
-                            // window.location.href = 'index.html'; // Opcional: Redirecionar
+                            cadastroClienteForm.reset(); 
                         });
                     } else {
                         window.showCustomModal('Erro!', data.message, 'error');

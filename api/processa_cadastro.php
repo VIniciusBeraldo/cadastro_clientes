@@ -1,57 +1,62 @@
 <?php
-// Define que a resposta será em formato JSON
+
+/**
+ * Arquivo: api/processa_cadastro.php
+ * Descrição: Script API para cadastrar novos clientes na tabela cliente.
+ * Autor: Vinicius Beraldo da Silva
+ * 
+ * Este script lida com requisições POST para:
+ * - Armazenar todos os dados informados no form.
+ * - Valida caso o CPF ou Email já exista no banco.
+ * - Realiza o INSERT na tabela de clientes com os dados armazenados do formulario.
+ */
+
 header('Content-Type: application/json');
 
-// 1. Configurações de Conexão com o Banco de Dados
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "cadastro_clientes";
 
-// 2. Conectar ao Banco de Dados
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar a conexão
 if ($conn->connect_error) {
     echo json_encode(['success' => false, 'message' => 'Erro na conexão com o banco de dados: ' . $conn->connect_error]);
     exit();
 }
 
-// 3. Verificar se os dados foram enviados via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // 4. Obter e Sanitizar os dados do formulário
-    $nomeCompleto = $_POST['nomeCompleto'] ?? '';
+
+    $nomeCompleto   = $_POST['nomeCompleto'] ?? '';
     $dataNascimento = $_POST['dataNascimento'] ?? '';
-    $cpf = $_POST['cpf'] ?? '';
-    $telefone = $_POST['telefone'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $endereco = $_POST['endereco'] ?? '';
+    $cpf            = $_POST['cpf'] ?? '';
+    $telefone       = $_POST['telefone'] ?? '';
+    $email          = $_POST['email'] ?? '';
+    $endereco       = $_POST['endereco'] ?? '';
 
-    // Validação básica
-    if (empty($nomeCompleto) || empty($dataNascimento) || empty($cpf) || empty($email) || empty($endereco)) {
-        echo json_encode(['success' => false, 'message' => 'Por favor, preencha todos os campos obrigatórios.']);
-        $conn->close();
-        exit();
-    }
 
-    // 5. Verificar se o CPF já existe
+    // -- Validando se o cpf já existe no banco -- //
     $stmt_cpf = $conn->prepare("SELECT id FROM clientes WHERE cpf = ?");
     $stmt_cpf->bind_param("s", $cpf);
     $stmt_cpf->execute();
     $stmt_cpf->store_result();
+
     if ($stmt_cpf->num_rows > 0) {
         echo json_encode(['success' => false, 'message' => 'Já existe um cliente cadastrado com este CPF.']);
         $stmt_cpf->close();
         $conn->close();
         exit();
     }
-    $stmt_cpf->close();
 
-    // 6. Verificar se o E-mail já existe
+    $stmt_cpf->close();
+    // -- Fim da validação do cpf -- //
+
+    // -- Validando se o email já existe no banco -- //
     $stmt_email = $conn->prepare("SELECT id FROM clientes WHERE email = ?");
     $stmt_email->bind_param("s", $email);
     $stmt_email->execute();
-    $stmt_email->store_result();
+    $stmt_email->store_result(); 
+
     if ($stmt_email->num_rows > 0) {
         echo json_encode(['success' => false, 'message' => 'Já existe um cliente cadastrado com este E-mail.']);
         $stmt_email->close();
@@ -59,30 +64,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     $stmt_email->close();
+    // -- Fim da validação do email -- //
 
-    // 7. Preparar e Executar a Inserção (usando Prepared Statements para segurança)
-    $sql = "INSERT INTO clientes (nome_completo, data_nascimento, cpf, telefone, email, endereco, data_cadastro) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+    $sql = "INSERT INTO clientes (nome_completo, data_nascimento, cpf, telefone, email, endereco, data_cadastro) 
+            VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
     $stmt = $conn->prepare($sql);
 
-    // 'ssssss' indica que todos os parâmetros são strings
     $stmt->bind_param("ssssss", $nomeCompleto, $dataNascimento, $cpf, $telefone, $email, $endereco);
 
     if ($stmt->execute()) {
         echo json_encode(['success' => true, 'message' => 'Cliente cadastrado com sucesso!']);
     } else {
-        // Erro na execução da consulta
         echo json_encode(['success' => false, 'message' => 'Erro ao cadastrar cliente: ' . $stmt->error]);
     }
 
-    // Fechar o statement
     $stmt->close();
 
 } else {
-    // Se a requisição não for POST
     echo json_encode(['success' => false, 'message' => 'Método de requisição inválido.']);
 }
 
-// Fechar a conexão com o banco de dados
 $conn->close();
 ?>

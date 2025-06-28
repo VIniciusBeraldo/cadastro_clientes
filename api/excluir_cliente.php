@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Arquivo: api/excluir_cliente.php
+ * Descrição: Script API para excluir um cliente no banco.
+ * Autor: Vinicius Beraldo da Silva
+ * 
+ * Este script lida com requisições POST para:
+ * - Realizar um DELETE no banco através do id passado ao executar a function deletarCliente
+ *   a mesma é chamada ao clicar no botão excluir na tabela de cliente, onde o mesmo contem o id no dataset.
+ */
+
 header('Content-Type: application/json');
 
 $servername = "localhost";

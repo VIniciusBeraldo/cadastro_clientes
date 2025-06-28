@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Arquivo: api/atualizar_cliente.php
+ * Descrição: Script API para atualizar os dados do clientes no banco quando enviado atraves do editar clientes.
+ * Autor: Vinicius Beraldo da Silva
+ * 
+ * Este script lida com requisições POST para:
+ * - Realizar um update na tabela de clientes, atualizando com os dados recebidos atraves da requisição 
+ *   ao clicar em Salvar alterações na tela Editar Clientes.
+ */
+
 header('Content-Type: application/json');
 
 $servername = "localhost";

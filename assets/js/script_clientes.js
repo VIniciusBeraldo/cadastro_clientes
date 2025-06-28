@@ -4,7 +4,11 @@
  * Arquivo: script_clientes.js
  * Descrição: Contém funções globais e manipuladores de eventos para o site.
  * Autor: Vinicius Beraldo da Silva
- * Data: 27/06/2025
+ * 
+ * function atualizarPaginaClientes: Atualiza a lista de clientes criando a tabela com os clientes retornados da api clientes.php
+ * function eventListnerBotoesTabela: Tratativa dos botões Alterar e Excluir, acionado quando clicar nos mesmos.
+ * function deletarCliente: chama a api excluir_cliente.php, utilizando o id do cliente ao clicar no botão que contem o dataset do cliente selecionado.
+ * 
  */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -12,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const listaClientesDiv = document.getElementById('listaClientes');
 
     // Função responsavel para preencher a lista de clientes no momento em que a pagina for carregada.
-    function fetchAndDisplayClients() {
+    function atualizarPaginaClientes() {
 
         listaClientesDiv.innerHTML = '<p class="status-clientes">Carregando clientes...</p>';
 
@@ -74,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     `;
                     listaClientesDiv.innerHTML = tableHTML;
 
-                    addEventListenersToButtons();
+                    eventListnerBotoesTabela();
 
                 } else {
                     listaClientesDiv.innerHTML = '<p class="status-clientes">Nenhum cliente cadastrado ainda.</p>';
@@ -86,16 +90,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // Função para adicionar os eventos de clique aos botões
-    function addEventListenersToButtons() {
-
+    function eventListnerBotoesTabela() {
         
         document.querySelectorAll('.delete-button').forEach(button => {
             button.addEventListener('click', function () {
                 const clientId = this.dataset.id;
 
                 if (confirm(`Tem certeza que deseja excluir o cliente com ID ${clientId}?`)) {
-                    deleteClient(clientId);
+                    deletarCliente(clientId);
                 }
             });
         });
@@ -108,7 +110,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function deleteClient(id) {
+    function deletarCliente(id) {
+
         fetch('api/excluir_cliente.php', {
             method: 'POST',
             headers: {
@@ -123,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then(data => {
                 if (data.success) { 
                     window.showCustomModal('Sucesso!', data.message, 'success', () => {
-                        fetchAndDisplayClients();
+                        atualizarPaginaClientes();
                     });
                 } else {
                     window.showCustomModal('Erro!', data.message || 'Erro desconhecido ao excluir cliente.', 'error');
@@ -134,5 +137,5 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    fetchAndDisplayClients();
+    atualizarPaginaClientes();
 });
