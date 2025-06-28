@@ -1,6 +1,14 @@
-// assets/js/modal_handler.js
+/**
+ * Arquivo: modal_hander.js
+ * Descrição: Contém funções para manipular o modal personalizado ao inves dos alert().
+ * Autor: Vinicius Beraldo da Silva
+ * 
+ * function showCustomModal: Responsavel por tornar o modal visivel após ser chamada pelo window.showCustomModal.
+ * function hideCustomModal: Responsavl por esconder o modal após os cliques nos botões de OK ou Close.
+ */
 
 document.addEventListener('DOMContentLoaded', function() {
+
     const customModal = document.getElementById('customModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalMessage = document.getElementById('modalMessage');
@@ -9,25 +17,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalContent = document.querySelector('.modal-content');
 
     function showCustomModal(title, message, type = 'info', callback = null) {
+
         modalTitle.textContent = title;
         modalMessage.textContent = message;
 
-        // Limpa classes de tipo anteriores
         modalContent.classList.remove('modal-success', 'modal-error', 'modal-info');
-        // Adiciona a classe de tipo
         modalContent.classList.add(`modal-${type}`);
 
-        // Garante que o modal esteja oculto antes de aplicar a classe 'show'
         modalContent.classList.remove('show');
-        customModal.style.display = 'flex'; // Exibe o overlay
+        customModal.style.display = 'flex';
 
-        // Pequeno atraso para permitir que a transição CSS ocorra
         setTimeout(() => {
             modalContent.classList.add('show');
         }, 10);
 
-
-        // Remove listeners anteriores para evitar múltiplos disparos
         modalButton.onclick = null;
         closeModal.onclick = null;
 
@@ -40,12 +43,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         closeModal.onclick = function() {
             hideCustomModal();
-            if (callback) { // Também chama o callback se fechar no X
+            if (callback) {
                 callback();
             }
         };
 
-        // Permite fechar clicando fora do modal
         customModal.addEventListener('click', function(event) {
             if (event.target === customModal) {
                 hideCustomModal();
@@ -58,10 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function hideCustomModal() {
         modalContent.classList.remove('show');
-        // Atraso para a animação de saída do modal
         setTimeout(() => {
-            customModal.style.display = 'none'; // Oculta o overlay após a animação
-        }, 300); // Deve ser igual ou maior que a duração da transição do CSS
+            customModal.style.display = 'none'; 
+        }, 300); 
     }
 
     // Torna a função showCustomModal acessível globalmente

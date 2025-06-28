@@ -1,5 +1,3 @@
-// script_clientes.js
-
 /**
  * Arquivo: script_clientes.js
  * Descrição: Contém funções globais e manipuladores de eventos para o site.

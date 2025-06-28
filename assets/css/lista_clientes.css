@@ -1,7 +1,13 @@
-/* Estilos para a tabela de clientes */
+/*
+ * Arquivo: lista_clientes.css
+ * Descrição: Estilos para a tabela de clientes.
+ * Autor: Vinicius Beraldo da Silva
+ */
+ 
+ /* Estilos para a tabela de clientes */
 .container-tabela-cliente {
     width: 100%;
-    overflow-x: auto; /* Adiciona scroll horizontal em telas pequenas */
+    overflow-x: auto; 
     margin-top: 20px;
 }
 
@@ -11,21 +17,23 @@
     margin-top: 15px;
 }
 
+/* Estilos padrões para coluna e linha */
 .tabela-cliente th,
 .tabela-cliente td {
     border: 1px solid #ddd;
     padding: 6px;
     text-align: left;
-    white-space: nowrap; /* Impede que o texto quebre em várias linhas (para dados) */
+    white-space: nowrap; 
     font-size: 0.9em;
 }
 
-/* NOVO: Permite que o conteúdo da ÚLTIMA célula (Ações) quebre linha */
+/* Permite que os botões da última célula (Ações) quebre linha */
 .tabela-cliente td:last-child {
-    white-space: normal; /* Permite a quebra de linha */
-    text-align: center;  /* Centraliza os botões (se ficarem um embaixo do outro) */
+    white-space: normal;
+    text-align: center; 
 }
 
+/* Ajustes para as colunas */
 .tabela-cliente th {
     background-color: #f2f2f2;
     font-weight: bold;
@@ -40,6 +48,7 @@
     background-color: #f1f1f1;
 }
 
+/* Estilo para mensagem quando não existe nenhum cliente */
 .status-clientes {
     text-align: center;
     color: #777;
@@ -56,9 +65,9 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.85em;
-    margin: 2px; /* Pequena margem ao redor dos botões para espaçar, se quebrarem linha */
-    white-space: nowrap; /* Mantém o texto de cada botão em uma linha */
-    display: inline-block; /* Garante que as margens e padding funcionem bem e permitam quebra de linha entre eles */
+    margin: 2px;
+    white-space: nowrap;
+    display: inline-block; 
 }
 
 .edit-button {
