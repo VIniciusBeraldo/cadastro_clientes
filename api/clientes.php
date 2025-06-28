@@ -1,27 +1,32 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-header('Content-Type: application/json'); // Informa ao navegador que a resposta é JSON
-header('Access-Control-Allow-Origin: *'); // Permite requisições de qualquer origem (útil para desenvolvimento)
 
-// 1. Configurações de Conexão com o Banco de Dados
+/**
+ * Arquivo: api/clientes.php
+ * Descrição: Script API para gerenciar (listar, buscar por ID) clientes no banco de dados.
+ * Autor: Vinicius Beraldo da Silva
+ * Data: 27/06/2025
+ *
+ * Este script lida com requisições GET para retornar:
+ * - Todos os clientes (se nenhum ID for fornecido)
+ * - Um cliente específico (se um ID for fornecido via GET)
+ */
+
+header('Content-Type: application/json'); 
+header('Access-Control-Allow-Origin: *'); 
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "cadastro_clientes";
 
-// 2. Conectar ao Banco de Dados
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar a conexão
 if ($conn->connect_error) {
-    // Retorna um erro JSON em caso de falha na conexão
     echo json_encode(['error' => 'Erro na conexão com o banco de dados: ' . $conn->connect_error]);
-    exit(); // Para a execução do script
+    exit();
 }
 
-// Verifica se um ID foi passado na URL para buscar um único cliente
+// Validando se chamada foi feita pelo botão excluir
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $sql = "SELECT
@@ -45,14 +50,14 @@ if (isset($_GET['id'])) {
 
     if ($result->num_rows > 0) {
         $client = $result->fetch_assoc();
-        echo json_encode($client); // Retorna o objeto do cliente
+        echo json_encode($client); 
     } else {
         echo json_encode(['error' => 'Cliente não encontrado.']);
     }
     $stmt->close();
 
 } else {
-    // Caso contrário, retorna todos os clientes (comportamento original)
+    // Caso não for chamado pelo botão excluir, vai alimentar toda a lista com os clientes encontrados.
     $sql = "SELECT
                 id,
                 nome_completo,
@@ -65,7 +70,7 @@ if (isset($_GET['id'])) {
             FROM
                 clientes
             ORDER BY
-                nome_completo ASC";
+                id ASC";
     $result = $conn->query($sql);
 
     $clientes = [];
@@ -74,7 +79,7 @@ if (isset($_GET['id'])) {
             $clientes[] = $row;
         }
     }
-    echo json_encode($clientes); // Retorna um array de clientes
+    echo json_encode($clientes);
 }
 
 $conn->close();

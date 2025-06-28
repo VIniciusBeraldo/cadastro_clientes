@@ -1,18 +1,18 @@
 /* Estilos para a tabela de clientes */
-.client-table-container {
+.container-tabela-cliente {
     width: 100%;
     overflow-x: auto; /* Adiciona scroll horizontal em telas pequenas */
     margin-top: 20px;
 }
 
-.client-table {
+.tabela-cliente {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
 }
 
-.client-table th,
-.client-table td {
+.tabela-cliente th,
+.tabela-cliente td {
     border: 1px solid #ddd;
     padding: 6px;
     text-align: left;
@@ -21,26 +21,26 @@
 }
 
 /* NOVO: Permite que o conteúdo da ÚLTIMA célula (Ações) quebre linha */
-.client-table td:last-child {
+.tabela-cliente td:last-child {
     white-space: normal; /* Permite a quebra de linha */
     text-align: center;  /* Centraliza os botões (se ficarem um embaixo do outro) */
 }
 
-.client-table th {
+.tabela-cliente th {
     background-color: #f2f2f2;
     font-weight: bold;
     color: #333;
 }
 
-.client-table tr:nth-child(even) {
+.tabela-cliente tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.client-table tr:hover {
+.tabela-cliente tr:hover {
     background-color: #f1f1f1;
 }
 
-.no-clients-message {
+.status-clientes {
     text-align: center;
     color: #777;
     margin-top: 20px;
